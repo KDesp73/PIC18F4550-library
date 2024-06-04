@@ -1,14 +1,3 @@
-/*
-
-Available Defines:
-#define LIB_H           -- Not necessary, it is all the lib defaults value
-#define SEVEN_SEGMENT   -- Functions for the 3 seven segment dispays
-#define LCD_DISPLAY     -- Functions for the lcd display
-#define MISC            -- Functions for lsb and msb
-#define KEYPAD          -- Functions for the keypad
-
-*/
-
 #ifndef LIB_H
 #define LIB_H
 
