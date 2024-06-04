@@ -3,6 +3,18 @@
 
 // :020000040000FA
 
+/** -[TOC]-
+ * 1. SEVEN_SEGMENT
+ * 2. MISC
+ * 3. KEYPAD
+*/
+
+/** Timer values
+ * Prescaler    Init Value    Result Interval  
+ * 
+ * 
+*/
+
 #use standard_io (A)
 #use standard_io (B)
 #use standard_io (C)
