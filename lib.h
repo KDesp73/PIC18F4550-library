@@ -123,12 +123,9 @@ void show_separators(int x, int y) {
    lcd_putc(":");
 }
 
-void show_clock(int first, int y, int seconds, int minutes, int hours) {
-    show_hours(first, y, hours);
-    show_separators(first + 2, y);
-    show_minutes(first + 3, y, minutes);
-    show_separators(first + 5, y);
-    show_seconds(first + 6, y, seconds);
+void show_clock(int x, int y, int seconds, int minutes, int hours) {
+    lcd_gotoxy(x, y);
+    printf(lcd_putc, "%2d:%2d:%2d", hours, minutes, seconds);
 }
 
 void lcd_send_nibble(int8 nibble);
