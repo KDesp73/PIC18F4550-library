@@ -5,13 +5,22 @@
 
 /** -[TOC]-
  * 1. SEVEN_SEGMENT
- * 2. MISC
- * 3. KEYPAD
+ * 2. LCD_DISPLAY
+ * 3. MISC
+ * 4. KEYPAD
 */
 
 /** Timer values
- * Prescaler    Init Value    Result Interval  
- * 
+ * Prescaler    Init Value      Result Interval  
+ * --------------------------------------------
+ * 1            5536            5ms
+ * 32           63661           5ms
+ * 64           63661           10ms
+ * 128          63661           20ms
+ * 64           59911           30ms
+ * 64           56161           50ms
+ * 128          56161           100ms
+ * 128          18661           500ms
  * 
 */
 
