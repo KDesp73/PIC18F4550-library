@@ -201,59 +201,6 @@ void lcd_putc(char c){
             break;
     }
 }
-
-//------------------------------
-
-#define LCD_MAX_LENGTH 16
-
-#define LCD_D0 PIN_B4
-#define LCD_D1 PIN_B5
-#define LCD_D2 PIN_B6
-#define LCD_D3 PIN_B7
-#define LCD_EN PIN_B3
-
-#define LINE_1 0x00
-#define LINE_2 0x40
-#define CLEAR_DISP 0x01
-
-
-void lcd_set_position(unsigned int cx);
-void lcd_put_cmd(unsigned int cx);
-void lcd_pulse_enable(void);
-void lcd_set_data(unsigned int cx);
-
-void lcd_clear(void){
-    printf(lcd_putc, "\f");
-}
-
-void lcd_set_position(unsigned int cx) {
-    lcd_set_data(swap(cx) | 0x08);
-    lcd_pulse_enable();
-    lcd_set_data(swap(cx));
-    lcd_pulse_enable();
-}
-
-void lcd_put_cmd(unsigned int cx) {
-    lcd_set_data(swap(cx));
-    lcd_pulse_enable();
-    lcd_set_data(swap(cx));
-    lcd_pulse_enable();
-}
-
-void lcd_pulse_enable(void) {
-    output_high(LCD_EN);
-    delay_us(10);
-    output_low(LCD_EN);
-    delay_ms(5);
-}
-
-void lcd_set_data(unsigned int cx) {
-    output_bit(LCD_D0, cx & 0x01);
-    output_bit(LCD_D1, cx & 0x02);
-    output_bit(LCD_D2, cx & 0x04);
-    output_bit(LCD_D3, cx & 0x08);
-}
-
 #endif // LCD_DISPLAY
 
 #ifdef MISC
