@@ -223,7 +223,7 @@ void lcd_pulse_enable(void);
 void lcd_set_data(unsigned int cx);
 
 void lcd_clear(void){
-    lcd_put_cmd(CLEAR_DISP);
+    printf(lcd_putc, "\f");
 }
 
 void lcd_set_position(unsigned int cx) {
