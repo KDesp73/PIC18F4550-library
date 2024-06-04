@@ -26,9 +26,9 @@ int main(int argc, char** argv){
     );
     
     struct option* options = clib_get_options(args);
-    
+    Cstr fmt = clib_generate_cli_format_string(args);
     int opt;
-    while ((opt = getopt_long(argc, argv, "hvt:", options, NULL)) != -1) {
+    while ((opt = getopt_long(argc, argv, fmt, options, NULL)) != -1) {
         switch (opt){
             case 'h':
                 clib_cli_help(args, "", "Made by KDesp73");
