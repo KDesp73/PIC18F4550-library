@@ -259,14 +259,12 @@ void lcd_set_data(unsigned int cx) {
 #ifdef MISC
 int8 four_lsb(int8 port){
     int8 temp;
-    delay_ms(30);
     temp = port & 0x0F;
     return temp;
 }
 
 int8 four_msb(int8 port){
     int8 temp;
-    delay_ms(30);
     temp = port & 0xF0;
     return temp;
 }
