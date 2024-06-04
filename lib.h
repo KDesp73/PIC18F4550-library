@@ -103,6 +103,43 @@ int8 const LCD_INIT_STRING[4] = {
     6                       // Increment cursor
 };
 
+void show_seconds(int x, int y, int seconds) {
+   lcd_gotoxy(x, y);
+   if (seconds < 10) {
+      lcd_putc("0");
+      lcd_gotoxy(x + 1, y);
+      printf(lcd_putc, "%d", seconds);
+   } else printf(lcd_putc, "%2d", seconds);
+}
+
+void show_minutes(int x, int y, int minutes) {
+   lcd_gotoxy(x, y);
+   if (minutes < 10) {
+      lcd_putc("0");
+      lcd_gotoxy(x + 1, y);
+      printf(lcd_putc, "%d", minutes);
+   } else printf(lcd_putc, "%2d", minutes);
+}
+
+void show_hours(int x, int y, int hours) {
+   lcd_gotoxy(x, y);
+   if (hours < 10) {
+        lcd_putc("0");
+        lcd_gotoxy(x + 1, y);
+        printf(lcd_putc, "%d", hours);
+   } else printf(lcd_putc, "%2d", hours);
+}
+
+void show_separators(int x, int y) {
+   lcd_gotoxy(x, y);
+   lcd_putc(":");
+}
+
+void show_clock(int x, int y, int seconds, int minutes, int hours) {
+    lcd_gotoxy(x, y);
+    printf(lcd_putc, "%2d:%2d:%2d", hours, minutes, seconds);
+}
+
 void lcd_send_nibble(int8 nibble);
 void lcd_send_byte(int8 address, int8 n);
 void lcd_init(void);
