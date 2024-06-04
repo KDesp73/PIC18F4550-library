@@ -3,6 +3,27 @@
 
 // :020000040000FA
 
+/** -[TOC]-
+ * 1. SEVEN_SEGMENT
+ * 2. LCD_DISPLAY
+ * 3. MISC
+ * 4. KEYPAD
+*/
+
+/** Timer values
+ * Prescaler    Init Value      Result Interval  
+ * --------------------------------------------
+ * 1            5536            5ms
+ * 32           63661           5ms
+ * 64           63661           10ms
+ * 128          63661           20ms
+ * 64           59911           30ms
+ * 64           56161           50ms
+ * 128          56161           100ms
+ * 128          18661           500ms
+ * 
+*/
+
 #use standard_io (A)
 #use standard_io (B)
 #use standard_io (C)
@@ -90,6 +111,43 @@ int8 const LCD_INIT_STRING[4] = {
     1,                      // Clear display
     6                       // Increment cursor
 };
+
+void show_seconds(int x, int y, int seconds) {
+   lcd_gotoxy(x, y);
+   if (seconds < 10) {
+      lcd_putc("0");
+      lcd_gotoxy(x + 1, y);
+      printf(lcd_putc, "%d", seconds);
+   } else printf(lcd_putc, "%2d", seconds);
+}
+
+void show_minutes(int x, int y, int minutes) {
+   lcd_gotoxy(x, y);
+   if (minutes < 10) {
+      lcd_putc("0");
+      lcd_gotoxy(x + 1, y);
+      printf(lcd_putc, "%d", minutes);
+   } else printf(lcd_putc, "%2d", minutes);
+}
+
+void show_hours(int x, int y, int hours) {
+   lcd_gotoxy(x, y);
+   if (hours < 10) {
+        lcd_putc("0");
+        lcd_gotoxy(x + 1, y);
+        printf(lcd_putc, "%d", hours);
+   } else printf(lcd_putc, "%2d", hours);
+}
+
+void show_separators(int x, int y) {
+   lcd_gotoxy(x, y);
+   lcd_putc(":");
+}
+
+void show_clock(int x, int y, int seconds, int minutes, int hours) {
+    lcd_gotoxy(x, y);
+    printf(lcd_putc, "%2d:%2d:%2d", hours, minutes, seconds);
+}
 
 void lcd_send_nibble(int8 nibble);
 void lcd_send_byte(int8 address, int8 n);
@@ -201,59 +259,6 @@ void lcd_putc(char c){
             break;
     }
 }
-
-//------------------------------
-
-#define LCD_MAX_LENGTH 16
-
-#define LCD_D0 PIN_B4
-#define LCD_D1 PIN_B5
-#define LCD_D2 PIN_B6
-#define LCD_D3 PIN_B7
-#define LCD_EN PIN_B3
-
-#define LINE_1 0x00
-#define LINE_2 0x40
-#define CLEAR_DISP 0x01
-
-
-void lcd_set_position(unsigned int cx);
-void lcd_put_cmd(unsigned int cx);
-void lcd_pulse_enable(void);
-void lcd_set_data(unsigned int cx);
-
-void lcd_clear(void){
-    lcd_put_cmd(CLEAR_DISP);
-}
-
-void lcd_set_position(unsigned int cx) {
-    lcd_set_data(swap(cx) | 0x08);
-    lcd_pulse_enable();
-    lcd_set_data(swap(cx));
-    lcd_pulse_enable();
-}
-
-void lcd_put_cmd(unsigned int cx) {
-    lcd_set_data(swap(cx));
-    lcd_pulse_enable();
-    lcd_set_data(swap(cx));
-    lcd_pulse_enable();
-}
-
-void lcd_pulse_enable(void) {
-    output_high(LCD_EN);
-    delay_us(10);
-    output_low(LCD_EN);
-    delay_ms(5);
-}
-
-void lcd_set_data(unsigned int cx) {
-    output_bit(LCD_D0, cx & 0x01);
-    output_bit(LCD_D1, cx & 0x02);
-    output_bit(LCD_D2, cx & 0x04);
-    output_bit(LCD_D3, cx & 0x08);
-}
-
 #endif // LCD_DISPLAY
 
 #ifdef MISC
@@ -402,6 +407,24 @@ if(++kbd_call_count>KBD_DEBOUNCE_FACTOR)
      }
          return(kchar);
 }
+
+int getNumber(int8* number_of_digits, int8 MAX_DIGITS, int16* number, char* current_char, char k)
+{
+    if (*number_of_digits == MAX_DIGITS)
+    {
+        *number_of_digits = 0;
+        return 1;
+    }
+    else
+    {
+        *current_char = (k & 0b00001111)
+        *number = *number + ((int)(k & 0b00001111)) * pow(10, *number_of_digits);
+        *number_of_digits++;
+        return 0;
+    }
+}
+
+
 #endif // KEYPAD
 
 
