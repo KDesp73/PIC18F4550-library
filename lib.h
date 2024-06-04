@@ -404,6 +404,24 @@ if(++kbd_call_count>KBD_DEBOUNCE_FACTOR)
      }
          return(kchar);
 }
+
+int getNumber(int8* number_of_digits, int8 MAX_DIGITS, int16* number, char* current_char, char k)
+{
+    if (*number_of_digits == MAX_DIGITS)
+    {
+        *number_of_digits = 0;
+        return 1;
+    }
+    else
+    {
+        *current_char = (k & 0b00001111)
+        *number = *number + ((int)(k & 0b00001111)) * pow(10, *number_of_digits);
+        *number_of_digits++;
+        return 0;
+    }
+}
+
+
 #endif // KEYPAD
 
 
